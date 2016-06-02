@@ -1,0 +1,16 @@
+{
+	"name": "com.phonegap.plugins.cameraplugin",
+	"description": "A plugin to capture image",
+	"version": "0.0.1",
+	"cordova": {
+	"id": "com.phonegap.plugins.cameraplugin",
+	"platforms": [
+			"android"
+		]
+	},
+	"repository": {
+					"type": "git",
+					"url": "https://github.com/Gokulms/Cameraplugin.git"
+	},
+	"author": "Neologix Software Solutions"
+}
