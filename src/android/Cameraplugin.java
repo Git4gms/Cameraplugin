@@ -2,6 +2,7 @@ package com.phonegap.plugins.cameraplugin;
 
 import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.CallbackContext;
+import 	org.apache.cordova.PluginResult;
 import org.json.JSONArray;
 import org.json.JSONException;
 
@@ -15,7 +16,7 @@ import 	java.io.ByteArrayOutputStream;
 import 	android.provider.MediaStore.Images;
 import 	android.database.Cursor;
 import 	android.provider.MediaStore;
-import 	org.apache.cordova.api.PluginResult;
+
 
 
 
