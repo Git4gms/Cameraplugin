@@ -18,6 +18,7 @@ import 	android.database.Cursor;
 import 	android.provider.MediaStore;
 
 
+
 public class Cameraplugin extends CordovaPlugin {
     private static final int CAMERA_REQUEST = 1888;
     public  CallbackContext callbackContext1;
@@ -37,14 +38,7 @@ public class Cameraplugin extends CordovaPlugin {
     private void openCamera(String message, CallbackContext callbackContext) {
         Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
         callbackContext1 = callbackContext;
-
         cordova.startActivityForResult(this,cameraIntent, CAMERA_REQUEST);
-
-      /*  if (message != null && message.length() > 0) {
-            callbackContext.success(message);
-        } else {
-            callbackContext.error("Expected one non-empty string argument.");
-        }*/
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -60,7 +54,7 @@ public class Cameraplugin extends CordovaPlugin {
             String thePath = finalFile.getAbsolutePath();
             String theName = finalFile.getName();
 
-            callbackContext1.success(thePath);
+            callbackContext1.success("file:/"+thePath);
         }else {
             callbackContext1.error("Expected one non-empty string argument.");
 
