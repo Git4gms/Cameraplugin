@@ -16,12 +16,6 @@ import 	java.io.ByteArrayOutputStream;
 import 	android.provider.MediaStore.Images;
 import 	android.database.Cursor;
 import 	android.provider.MediaStore;
-import 	android.os.Environment;
-import 	java.util.Random;
-import 	java.io.FileOutputStream;
-
-
-
 
 
 
@@ -54,19 +48,14 @@ public class Cameraplugin extends CordovaPlugin {
         CallbackContext callbackContext;
         if (requestCode == CAMERA_REQUEST && resultCode == this.cordova.getActivity().RESULT_OK) {
             Bitmap photo = (Bitmap) data.getExtras().get("data");
-            String filePath = SaveImage(photo);
             //imageView.setImageBitmap(photo);
-            //Uri tempUri = getImageUri(this.cordova.getActivity().getApplicationContext(), photo);
+            Uri tempUri = getImageUri(this.cordova.getActivity().getApplicationContext(), photo);
 
-            /*File finalFile = new File(getRealPathFromURI(tempUri));
+            File finalFile = new File(getRealPathFromURI(tempUri));
             String thePath = finalFile.getAbsolutePath();
-            String theName = finalFile.getName();*/
-            if(filePath != ""){
-                callbackContext1.success("file:/"+filePath);
-            }else {
-                callbackContext1.error("Invalid file.");
+            String theName = finalFile.getName();
 
-            }
+            callbackContext1.success("file://"+thePath);
         }else {
             callbackContext1.error("Expected one non-empty string argument.");
 
@@ -85,29 +74,5 @@ public class Cameraplugin extends CordovaPlugin {
         cursor.moveToFirst();
         int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
         return cursor.getString(idx);
-    }
-    public String SaveImage(Bitmap finalBitmap) {
-
-        String root = Environment.getExternalStorageDirectory().toString();
-        File myDir = new File(root + "/EOS_images");
-        myDir.mkdirs();
-        Random generator = new Random();
-        int n = 10000;
-        n = generator.nextInt(n);
-        String fname = "EOS_IMG-"+ n +".jpg";
-        File file = new File (myDir, fname);
-        if (file.exists ()) file.delete ();
-        try {
-            FileOutputStream out = new FileOutputStream(file);
-            finalBitmap.compress(Bitmap.CompressFormat.JPEG, 90, out);
-            String thePath = file.getAbsolutePath();
-            out.flush();
-            out.close();
-            return thePath;
-
-        } catch (Exception e) {
-           // e.printStackTrace();
-            return "";
-        }
     }
 }
