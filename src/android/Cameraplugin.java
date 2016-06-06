@@ -18,13 +18,10 @@ import 	android.database.Cursor;
 import 	android.provider.MediaStore;
 
 
-
-
-
-
-
 public class Cameraplugin extends CordovaPlugin {
     private static final int CAMERA_REQUEST = 1888;
+    public  CallbackContext callbackContext1;
+
 
     @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
@@ -39,21 +36,19 @@ public class Cameraplugin extends CordovaPlugin {
 
     private void openCamera(String message, CallbackContext callbackContext) {
         Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+        callbackContext1 = callbackContext;
 
         cordova.startActivityForResult(this,cameraIntent, CAMERA_REQUEST);
 
-        PluginResult r = new PluginResult(PluginResult.Status.NO_RESULT);
-        r.setKeepCallback(true);
-        callbackContext.sendPluginResult(r);
-
-        if (message != null && message.length() > 0) {
+      /*  if (message != null && message.length() > 0) {
             callbackContext.success(message);
         } else {
             callbackContext.error("Expected one non-empty string argument.");
-        }
+        }*/
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        final Cameraplugin that = this;
         super.onActivityResult(requestCode, resultCode, data);
         CallbackContext callbackContext;
         if (requestCode == CAMERA_REQUEST) {
@@ -64,9 +59,11 @@ public class Cameraplugin extends CordovaPlugin {
             File finalFile = new File(getRealPathFromURI(tempUri));
             String thePath = finalFile.getAbsolutePath();
             String theName = finalFile.getName();
-           
-            //  Toast.makeText(FirstApp.this,"theName", Toast.LENGTH_LONG).show();
-            //Toast.makeText(Testcamera.this,"file:/"+thePath, Toast.LENGTH_LONG).show();
+
+            callbackContext1.success(thePath);
+        }else {
+            callbackContext1.error("Expected one non-empty string argument.");
+
         }
     }
     public Uri getImageUri(Context inContext, Bitmap inImage) {
@@ -83,7 +80,4 @@ public class Cameraplugin extends CordovaPlugin {
         int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
         return cursor.getString(idx);
     }
-
-
-
 }
