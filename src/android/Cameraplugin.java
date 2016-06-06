@@ -18,6 +18,7 @@ import 	android.database.Cursor;
 import 	android.provider.MediaStore;
 
 
+
 public class Cameraplugin extends CordovaPlugin {
     private static final int CAMERA_REQUEST = 1888;
     public  CallbackContext callbackContext1;
@@ -45,7 +46,7 @@ public class Cameraplugin extends CordovaPlugin {
         final Cameraplugin that = this;
         super.onActivityResult(requestCode, resultCode, data);
         CallbackContext callbackContext;
-        if (requestCode == CAMERA_REQUEST && resultCode == Activity.RESULT_OK) {
+        if (requestCode == CAMERA_REQUEST && resultCode == this.cordova.getActivity().RESULT_OK) {
             Bitmap photo = (Bitmap) data.getExtras().get("data");
             //imageView.setImageBitmap(photo);
             Uri tempUri = getImageUri(this.cordova.getActivity().getApplicationContext(), photo);

@@ -1,7 +1,7 @@
 {
 	"name": "com.phonegap.plugins.cameraplugin",
 	"description": "A plugin to capture image",
-	"version": "0.0.7",
+	"version": "0.0.8",
 	"cordova": {
 	"id": "com.phonegap.plugins.cameraplugin",
 	"platforms": [
