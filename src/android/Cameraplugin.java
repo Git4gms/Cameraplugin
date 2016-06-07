@@ -99,7 +99,7 @@ public class Cameraplugin extends CordovaPlugin {
         if (file.exists ()) file.delete ();
         try {
             FileOutputStream out = new FileOutputStream(file);
-            finalBitmap.compress(Bitmap.CompressFormat.JPEG, 90, out);
+            finalBitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
             String thePath = file.getAbsolutePath();
             out.flush();
             out.close();
