@@ -22,9 +22,6 @@ import 	java.io.FileOutputStream;
 
 
 
-
-
-
 public class Cameraplugin extends CordovaPlugin {
     private static final int CAMERA_REQUEST = 1888;
     public  CallbackContext callbackContext1;
@@ -43,6 +40,7 @@ public class Cameraplugin extends CordovaPlugin {
 
     private void openCamera(String message, CallbackContext callbackContext) {
         Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+        cameraIntent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 1);
         callbackContext1 = callbackContext;
         cordova.startActivityForResult(this,cameraIntent, CAMERA_REQUEST);
     }
@@ -62,7 +60,7 @@ public class Cameraplugin extends CordovaPlugin {
             String thePath = finalFile.getAbsolutePath();
             String theName = finalFile.getName();*/
             if(filePath != ""){
-                callbackContext1.success("file://"+filePath);
+                callbackContext1.success("file:/"+filePath);
             }else {
                 callbackContext1.error("Invalid file.");
 
@@ -89,7 +87,7 @@ public class Cameraplugin extends CordovaPlugin {
     public String SaveImage(Bitmap finalBitmap) {
 
         String root = Environment.getExternalStorageDirectory().toString();
-        File myDir = new File(root + "/EOS_Temp");
+        File myDir = new File(root + "/EOS_images");
         myDir.mkdirs();
         Random generator = new Random();
         int n = 10000;
@@ -99,7 +97,7 @@ public class Cameraplugin extends CordovaPlugin {
         if (file.exists ()) file.delete ();
         try {
             FileOutputStream out = new FileOutputStream(file);
-            finalBitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
+            finalBitmap.compress(Bitmap.CompressFormat.JPEG, 90, out);
             String thePath = file.getAbsolutePath();
             out.flush();
             out.close();
